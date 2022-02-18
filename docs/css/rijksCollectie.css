@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+    4 padding: 0;
+}
+
+ul>li {
+    margin-top: 1em;
+}
+
+ul>li>figure {
+    margin: 0;
+    background-color: #222;
+    color: #fff;
+    font: italic smaller sans-serif;
+    padding: 3px;
+    text-align: center;
+}
+
+ul>li>figure>img {
+    width: 100vw;
+}

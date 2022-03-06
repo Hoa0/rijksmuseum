@@ -33,8 +33,8 @@ console.log(collectionOfArt);
 function overviewInfo(data) {
  
     data.forEach(item => {
-        artItem = document.createElement('li');
-            output = '<figure><img src="' + item.img + '" alt="image of arts"><figcaption>' + item.title + '</figcaption></figure>';
+        let artItem = document.createElement('li');
+            let output = '<figure><img src="' + item.img + '" alt="image of arts"><figcaption>' + item.title + '</figcaption></figure>';
             artItem.innerHTML = output;
         document.getElementById('art-collection').appendChild(artItem);
     })

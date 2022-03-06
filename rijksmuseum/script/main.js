@@ -1,6 +1,6 @@
 import {getData} from './modules/data.js'
 import {setArts} from './modules/render.js'
-
+// https://gitmoji.dev/ get ur gitemojis now
 getAndRenderData()
 const display = document.getElementById('art-collection');
 display.textContent = "loading, even geduld a.u.b";

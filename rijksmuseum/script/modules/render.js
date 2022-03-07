@@ -5,7 +5,8 @@ export function setArts(response, element) {
     collectionOfArt.push({
       title: artCollect.longTitle,
       img: artCollect.webImage.url,
-      artid: artCollect.objectNumber
+      artid: artCollect.objectNumber,
+      link: artCollect.links.web
     });
   });
   element.textContent = "";
@@ -16,6 +17,18 @@ export function setArts(response, element) {
 }
 
 function overviewInfo(data) {
+  //Controler als art-collection niet bestaat, bestaat het niet dan maak een nieuwe aan.
+  if(!document.getElementById('art-collection')) {
+    let createList = document.createElement('ul')
+    createList.setAttribute('id','art-collection')
+    document.querySelector('main').appendChild(createList)
+  }
+  //hier maak ik een nieuwe unordered list aan dus hier moet je een check schrijven 
+  if(document.getElementById('detailsOfArt')) {
+    const artDetail = document.querySelector('#detailsOfArt')
+    document.querySelector('main').removeChild(artDetail)
+  }
+
   data.forEach(item => {
     //li wil je een href meegeven met een #details/:id (nl-BK-17496) dan navigeer je naar detail pagina die de details rendert
     let artItem = document.createElement('li');
@@ -29,28 +42,17 @@ function overviewInfo(data) {
       </figure>
      </a>
      ` 
-          artItem.innerHTML = output;
+      artItem.innerHTML = output;
       document.getElementById('art-collection').appendChild(artItem);
-
-
-      /* 
-      const overViewItem = `
-      <a href="#detail/${key.id}">
-        <article>
-        <img src="${key.attributes.posterImage.small}" alt="${title}">
-        <p>${title}</p>
-        </article>
-      </a>`
-      
-      */
   })
 }
 
 /* add details */
 export const setDetails = (data) => {
-
+  console.log(`een hoopje data`)
+  console.log(data)
   //Kijk als main container een kind heeft, zoja verwijder deze (loading state verwijderen)
-  const mainContainer = documen.querySelector('main')
+  const mainContainer = document.querySelector('main')
   while (mainContainer.firstChild){
     mainContainer.removeChild(mainContainer.firstChild)
   }
@@ -58,29 +60,16 @@ export const setDetails = (data) => {
   // template literal `` || variabele binnen een template literal ${}
 const detailsArt = `
   <section id="detailsOfArt">
-    <h2>${data.title}</h2>
-    <img src="${data.img}" alt="">
-    <p>${data.description}</p>
-    <a>${data.links.web}</a> 
+    <h2>${data.artObject.longTitle}</h2>
+    <img src="${data.artObject.webImage.url}" alt="foto">
+    <p>${data.artObject.description}</p>
+
+    <a>materiaal: ${data.artObject.materials}</a> 
     <a id="bnt" href="#overview">Terug</a>
   </section>
   `
 // a link web -> rijksmuseumlink
-/*
-0:
-  hasImage: true
-  headerImage: {guid: 'a355f7dd-d274-4797-9d71-e8f2fb0661ec', offsetPercentageX: 0, offsetPercentageY: 0, width: 1822, height: 437, …}
-  id: "nl-BK-17496"
-  links: {self: 'http://www.rijksmuseum.nl/api/nl/collection/BK-17496', web: 'http://www.rijksmuseum.nl/nl/collectie/BK-17496'}
-  longTitle: "Blauwe ara, Meissener Porzellan Manufaktur, 1731"
-  objectNumber: "BK-17496"
-  permitDownload: true
-  principalOrFirstMaker: "Meissener Porzellan Manufaktur"
-  productionPlaces: (3) ['Meissen', 'Meissen', 'Meissen']
-  showImage: true
-  title: "Blauwe ara"
-
-*/
+// voor de data elementen die je op je detailpagina wilt zien moet je naar het object artObject kijken en de keys daaruit pakken
 
 mainContainer.insertAdjacentHTML('beforeend', detailsArt)
 // return true

@@ -1,21 +1,30 @@
 import { getData } from "./data.js";
 import { setArts, setDetails } from "./render.js";
 
+const display = document.getElementById('art-collection');
+display.textContent = "loading, even geduld a.u.b";
+
 export function router() {
   const baseURL = 'https://www.rijksmuseum.nl/api/nl/collection'
   const key = '?key=m37TFPjT'
 
   routie({
-    'overview': async function() {
+    overview: async function() {
       const getOverview = await getData(`${baseURL}${key}`)
       console.log('ik doe wat')
-      return setArts(getOverview)
+      return setArts(getOverview, display)
     },
     'detail/:id': async function(id) {
       const detailArts = await getData(`${baseURL}/${id}${key}`)
-      console.log('ik ben details')
-      return setDetails(detailArts)
-    }
+      console.log(`ik ben details en navigeer naar ${baseURL}/${id}${key}` )
+      console.log(`dataset`, detailArts)
+      return setDetails(detailArts, display)
+    },
+    '': async function() {
+      const getOverview = await getData(`${baseURL}${key}`)
+      console.log('wildcard', getOverview)
+      return setArts(getOverview, display)
+    },
   })
 }
 

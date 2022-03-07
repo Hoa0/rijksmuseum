@@ -20,11 +20,11 @@ ul>li>figure {
     text-align: center;
 }
 
-ul>li>figure>figcaption {
+ul>li>a>figure>figcaption {
     padding: 1.5em;
 }
 
-ul>li>figure>img {
+ul>li>a>figure>img {
     width: 100vw;
 }
 

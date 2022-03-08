@@ -6,7 +6,7 @@ display.textContent = "loading, even geduld a.u.b";
 
 export function router() {
   const baseURL = 'https://www.rijksmuseum.nl/api/nl/collection'
-  const key = '?key=m37TFPjT'
+  const key = '?key=m37TFPjT&ps=20'
 
   routie({
     overview: async function() {

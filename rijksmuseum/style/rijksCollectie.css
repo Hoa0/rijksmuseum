@@ -1,27 +1,30 @@
-body {
+/* CSS Document */
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
 }
 
 ul {
     list-style: none;
-    padding: 0;
 }
 
 ul>li {
     margin-top: 1em;
 }
 
-ul>li>figure {
-    margin: 0;
+ul>li>figure {}
+
+figure>figcaption {
+    position: relative;
+    top: -1em;
     background-color: #222;
     color: #fff;
     font: italic smaller sans-serif;
-    /* padding: 20px; */
+    padding: 20px;
     text-align: center;
-}
-
-figure>figcaption {
-    padding: 1.5em;
 }
 
 img {

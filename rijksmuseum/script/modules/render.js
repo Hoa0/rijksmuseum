@@ -64,7 +64,7 @@ const detailsArt = `
     <img src="${data.artObject.webImage.url}" alt="foto">
     <p>${data.artObject.description}</p>
 
-    <a>materiaal: ${data.artObject.materials}</a> 
+    <p>materiaal: ${data.artObject.materials}</p> 
     <a id="bnt" href="#overview">Terug</a>
   </section>
   `

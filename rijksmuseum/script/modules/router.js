@@ -20,6 +20,11 @@ export function router() {
       console.log(`dataset`, detailArts)
       return setDetails(detailArts, display)
     },
+    'search/searchItem':async(searchItem)=>{
+      const searchData = await getData(`${baseURL}${key}&q=${searchItem}`)
+      console.log('test search things')
+      return setResults(searchData)
+    },
     '': async function() {
       const getOverview = await getData(`${baseURL}${key}`)
       console.log('wildcard', getOverview)

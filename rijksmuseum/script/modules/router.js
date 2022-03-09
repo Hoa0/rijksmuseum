@@ -20,7 +20,7 @@ export function router() {
       console.log(`dataset`, detailArts)
       return setDetails(detailArts, display)
     },
-    'search/searchItem':async(searchItem)=>{
+    'search/:searchItem':async(searchItem)=>{
       const searchData = await getData(`${baseURL}${key}&q=${searchItem}`)
       console.log('test search things')
       return setResults(searchData)

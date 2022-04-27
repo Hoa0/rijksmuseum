@@ -17,7 +17,9 @@
 //         .catch(error => console.warn(error))
 // }
 
-import { router } from "./modules/router.js";
+import {
+    router
+} from "./modules/router.js";
 
 // const display = document.getElementById('art-collection');
 // display.textContent = "loading, even geduld a.u.b";

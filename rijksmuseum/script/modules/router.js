@@ -1,10 +1,8 @@
 import { getData } from "./data.js";
 import { setArts, setDetails } from "./render.js";
-
-// import { loading } from "./state.js";
+import { loading, addLoadingElement } from "./state.js";
 
 const display = document.getElementById("art-collection");
-// display.textContent = "Kunstwerken laden, even geduld a.u.b";
 
 export function router() {
   const baseURL = "https://www.rijksmuseum.nl/api/nl/collection";
@@ -24,8 +22,16 @@ export function router() {
     },
     "search/:searchItem": async (searchItem) => {
       const searchData = await getData(`${baseURL}${key}&q=${searchItem}`);
-      console.log("test search things");
-      return setResults(searchData);
+
+      //Controle als het aantal groter is dan 0, zo niet, geen resultaten melding
+      if (searchData.count > 0) {
+        console.log(`found ${searchData.count} results \n`, searchData)
+        return setArts(searchData)
+      } else {
+        console.log(`found no results`)
+        addLoadingElement(document.querySelector('main'), 'noResult')
+
+      }
     },
     "": async function () {
       const getOverview = await getData(`${baseURL}${key}`);

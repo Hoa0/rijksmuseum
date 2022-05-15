@@ -1,20 +1,15 @@
-import { loading } from './state.js'
-
 export function setArts(response, element) {
-  loading('loading', '.state-loading')
   const collectionOfArt = [];
 
   response.artObjects.forEach(artCollect => {
     collectionOfArt.push({
       title: artCollect.longTitle,
-      img: artCollect.webImage.url,
+      img: artCollect.hasImage ? artCollect.webImage.url : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg',
       artid: artCollect.objectNumber,
       link: artCollect.links.web
     });
   });
 
-  // element.textContent = "";
-  element.classList.remove("state-loading");
   overviewInfo(collectionOfArt); //gebruikt functie hieronder, dus hoeft niet geexporteerd te worden
 
   console.log(`log collectionOfArt`, collectionOfArt);
@@ -54,7 +49,7 @@ function overviewInfo(data) {
 /* add details */
 export const setDetails = (data) => {
   console.log(`een hoopje data`)
-  console.log(data)
+  // console.log(data)
   //Kijk als main container een kind heeft, zoja verwijder deze (loading state verwijderen)
   const mainContainer = document.querySelector('main')
   while (mainContainer.firstChild) {
@@ -67,7 +62,6 @@ export const setDetails = (data) => {
     <h2>${data.artObject.longTitle}</h2>
     <img src="${data.artObject.webImage.url}" alt="foto">
     <p>${data.artObject.description}</p>
-
     <p>materiaal: ${data.artObject.materials}</p> 
     <a id="bnt" href="#overview">Terug</a>
   </section>

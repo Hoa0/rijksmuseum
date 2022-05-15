@@ -13,13 +13,27 @@
 //     */
 // }
 
+import { loading, removeElement } from './state.js'
+
 /* Functie exporteren met een link die data terug stuurt */
 export const getData = async (url) => {
-    return await fetch(url)
-        .then((response) => response.json())
-        .catch((error) => console.log(error))
-        .finally(() => {
-            console.log('klaar met laden')
-            // binnenkort: een lader toevoegen en verwijderen
-        })
+  return await fetch(url)
+    .then((response) => {
+      if (document.querySelector('.state-loading')) {
+        loading('loading', '.state-loading');
+      } else {
+        console.log('element does not exist anymore')
+        document.createElement('p')
+          .classList.add('state-loading')
+          .createTextNode(loading('loading', 'state-loading'))
+      }
+      return response.json()
+    })
+    .catch((error) => console.log(error))
+    .finally(() => {
+      console.log('done with loading')
+      if (document.querySelector('.state-loading')) {
+        removeElement('.state-loading', true)
+      }
+    })
 }

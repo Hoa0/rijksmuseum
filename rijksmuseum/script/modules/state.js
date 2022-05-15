@@ -1,5 +1,3 @@
-// const display = document.getElementById('art-collection');
-
 /**
  * 
  * @param {*} typeOfState Type melding die je wilt, loading, error, noResult
@@ -13,22 +11,40 @@ export function loading(typeOfState, element) {
     // const all = document.querySelectorAll(element) // querySelectorAll pakt alle elementen die passen in de parameter enn returnt een HTMLList
 
     if (typeOfState === 'loading') {
-        return selector.textContent = "Laden, even geduld a.u.b."
+        return selector.textContent = 'Laden, even geduld a.u.b.'
     }
     else if (typeOfState === 'error') {
-        return selector.textContent = "Er is een fout opgetreden"
+        return selector.textContent = 'Er is een fout opgetreden'
     } else if (typeOfState === 'noResult'){
-        return selector.textContent = "Er zijn geen resultaten gevonden"
+        return selector.textContent = 'Er zijn geen resultaten gevonden'
     } else {
-        return selector.textContent = ""
+        return selector.textContent = ''
     }
-    display.textContent = "loading, even geduld a.u.b";
 }
 
 // modulair maken en state maken wanneer het laad en wanneer de zoekfunctie niks terug stuurt en een error state
-
-export function removeElement(element) {
+/**
+ * @description functie om een element te verwijderen
+ * @param {string} element dat verwijderd moet worden
+ * @param {Boolean} boolean, moet het verwijderd worden? true or false
+ */
+export function removeElement(element, boolean) {
     const elementToRemove = document.querySelector(element)
-    elementToRemove.remove()
+    if (boolean === true){
+        elementToRemove.remove()
+    }
+}
+
+/**
+ * @description maak een nieuwe element aan en voeg de loading state toe
+ * @param {string} currentElement selecteer waar het element geplaatst moet worden
+ * @param {string} loadingState wat voor melding moet het geven, loading, error of noResult
+ */
+export function addLoadingElement(currentElement, loadingState){
+    const newElement = document.createElement('p');
+    newElement.classList.add('state')
+
+    document.body.insertBefore(newElement, currentElement);
+    loading(loadingState, '.state');
 }
 

@@ -1,40 +1,34 @@
-// function getData(){
-//     const endpoint ='https://www.rijksmuseum.nl/api/nl/collection?key=m37TFPjT'
-//     //const key ='m37TFPjT'
-//     //let url=''
-//     const display = document.getElementById('art-collection');
-//     display.textContent = "loading, even geduld a.u.b";
-//     const collectionOfArt = [];
+/**
+ * @param {string} url API URL waar je data vandaan wilt halen
+ * @returns API response in JSON formaat
+ */
+ const getData = async (url) => {
+    return await fetch(url)
+      .then((response) => {
+        if (response.status >= 200 && response.status <= 299 ) {
+            return response.json()
+        } else {
+            throw Error(response.statusText)
+        }
+      })
+      .catch((error) => console.log(`data fetching`, error)) 
+      .finally(() => {
+        console.log('done fetching')
+        document.getElementById('art-collection').textContent =''; 
 
-//     /*
-//     Data ophalen
-//     een fetch schrijven die de data ophaalt, en deze terug stuurt.
 
-//     */
-// }
+      })
+  }
 
-import { loading, removeElement } from './state.js'
-
-/* Functie exporteren met een link die data terug stuurt */
-export const getData = async (url) => {
-  return await fetch(url)
-    .then((response) => {
-      if (document.querySelector('.state-loading')) {
-        loading('loading', '.state-loading');
-      } else {
-        console.log('element does not exist anymore')
-        document.createElement('p')
-          .classList.add('state-loading')
-          .createTextNode(loading('loading', 'state-loading'))
-      }
-      return response.json()
-    })
-    .catch((error) => console.log(error))
-    .finally(() => {
-      console.log('klaar met ladeeeeen')
-      if (document.querySelector('.state-loading')) {
-        removeElement('.state-loading', true)
-      }
-      // binnenkort: een lader toevoegen en verwijderen
-    })
+/**
+ * @description returns the object of the response, usually the body, for rijksmuseum it could be either artObjects or artObject
+ * @param {Object} data Data response van de API
+ * @param {String} object Naam van het object dat je terug wilt krijgen 
+ * @returns Object de data die je wilt gebruiken in de applicatie
+ */
+const getObjectFromData = (data, object) => {
+    return data[object]
 }
+
+export default getData;
+export {getData, getObjectFromData}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Rijksmuseum</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../rijksmuseum/style/rijksCollectie.css'>
+</head>
+
+<body>
+    <header>
+        <h1>Rijksmuseum - kunstcollecties</h1>
+        <form action="#search/">
+            <label class="hide-elements" for="site-search">Search the site:</label>
+            <input type="search" id="textInput-search" name="q" aria-label="Search through site content">
+
+            <button id="btn-search">Search</button>
+        </form>
+    </header>
+    <main>
+        <p class="state-loading"></p>
+        <ul id="art-collection">
+        </ul>
+    </main>
+    <!-- footer -->
+    <footer>
+        <p>&copy; 2022 &dash; Thuan - Hoa Le </p>
+    </footer>
+    <script src="../rijksmuseum/script/vendor/routie.js"></script>
+    <script type="module" defer src="../rijksmuseum/script/main.js"></script>
+</body>
+
+</html>

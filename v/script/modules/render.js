@@ -1,74 +1,124 @@
-export function setArts(response, element) {
-  const collectionOfArt = [];
+import { stateManagement } from "../modules/state.js";
 
-  response.artObjects.forEach(artCollect => {
-    collectionOfArt.push({
-      title: artCollect.longTitle,
-      img: artCollect.hasImage ? artCollect.webImage.url : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg',
-      artid: artCollect.objectNumber,
-      link: artCollect.links.web
+ const render = {
+    overview(data) {
+      console.log('overview van data', data)
+      if (doesContainerExist('#art-collection')) {
+        clearContainer('#art-collection')
+        return setGallery(data)
+      }
+      return data
+    },
+    detail(data, id) {
+      console.log(`detailpage of ${id}`, data)
+      if (doesContainerExist('#art-collec tion')) {
+        clearContainer('#art-collection') // inhoud van container wordt verwijderd
+        return createDetailPage(data)
+      }
+      return data
+    },
+    search(query, data) {
+      console.log(`searching ${query}`)
+    
+      if(stateManagement.isSearchEmpty(query, data)) {
+        console.log('data is groter dan 1')
+        if(doesContainerExist('#art-collection')) {
+          clearContainer('#art-collection') 
+          return setGallery(data)
+        } else {
+        console.log('Data heeft geen resultaten')
+        }
+      }
+      return data
+    }
+  }
+  
+  /**
+   * @description bekijk als de container (#art-collection) bestaat, en geef een boolean terug
+   * @param {string} target 
+   * @returns 
+   */
+  const doesContainerExist = (target) => {
+    target = document.querySelector(target)
+    return target ? true : false 
+  }
+
+  /**
+   * altijd nieuwe content te zien :) Om oude content te verwijderen en nieuwe content te zien ;)
+   * @description Haal alle elementen uit de container zodat deze leeg is. Anders wordt content tekst onder elkaar geplakt
+   * Kijk als de aantal children in de element groter is dan 0, zoja verwijder de eerste en herhaal dit
+   * @param {String} string container die leeg gehaald moet worden.
+   * @see https://www.geeksforgeeks.org/remove-all-the-child-elements-of-a-dom-node-in-javascript/#:~:text=Child%20nodes%20can%20be%20removed,which%20produces%20the%20same%20output.
+   */
+  const clearContainer = (string) => {
+    const container = document.querySelector(string) 
+  
+    let target = container.firstElementChild 
+    while (container.childElementCount > 0) { 
+      target.remove()
+      target = container.firstElementChild
+    }
+  }
+  
+  /**
+   * Maak een detail element aan voor één detail item.
+   * Maak een HTML element aan en vul hier de data in.
+   * Achter de object data zit een ? om te kijken als de key bestaat, bestaat het niet? dan stuurt het undefined terug in plaats van een error
+   * 
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining
+   * @param {string} data 
+   */
+  const createDetailPage = (data) => {
+    const detailsArt = `
+    <section id="detailsOfArt">
+      <h2>${data?.longTitle}</h2>
+      <img src="${data?.webImage.url}" alt="foto">
+      <p>${data?.description}</p>
+      <p>materiaal: ${data?.materials}</p> 
+      <a id="bnt" href="">Terug</a>
+    </section>
+    `
+    document.querySelector('#art-collection').insertAdjacentHTML('afterbegin', detailsArt)
+  }
+  
+  /**
+   * create an overview gallery for art collection
+   * @param {Array} data is een array van collection (setGallery) die dus ieder key value pair in een HTMLElement plaatst
+   */
+  const createGalleryView = (data) => {
+    data.forEach(item => {
+      const element = document.createElement('li')
+      const content = `
+        <a href="#detail/${item.artid}">
+        <figure>
+          <img src="${item.img}" alt="image of arts"><figcaption>${item.title}</figcaption>
+        </figure>
+        </a>
+      `
+      element.innerHTML = content
+      document.querySelector('#art-collection').appendChild(element)
+    })
+  
+  }
+  
+  /**
+   * Looping door artObjects array en voeg items title, img etc toe aan array collection
+   * @param {string} response API call (getData)
+   * @returns show collection of arts
+   */
+  const setGallery = (response) => {
+    const collection = [];
+    response.forEach(item => {
+      collection.push({
+        title: item?.longTitle,
+        img: item?.hasImage ? item?.webImage.url : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg',
+        artid: item?.objectNumber,
+        link: item?.links.web
+      })
     });
-  });
-
-  overviewInfo(collectionOfArt); //gebruikt functie hieronder, dus hoeft niet geexporteerd te worden
-
-  console.log(`log collectionOfArt`, collectionOfArt);
-}
-
-function overviewInfo(data) {
-  //Controler als art-collection niet bestaat, bestaat het niet dan maak een nieuwe aan.
-  if (!document.getElementById('art-collection')) {
-    let createList = document.createElement('ul')
-    createList.setAttribute('id', 'art-collection')
-    document.querySelector('main').appendChild(createList)
+    return createGalleryView(collection)
   }
-  //hier maak ik een nieuwe unordered list aan dus hier moet je een check schrijven 
-  if (document.getElementById('detailsOfArt')) {
-    const artDetail = document.querySelector('#detailsOfArt')
-    document.querySelector('main').removeChild(artDetail)
-  }
+  
+  export { render }
 
-  data.forEach(item => {
-    //li wil je een href meegeven met een #details/:id (nl-BK-17496) dan navigeer je naar detail pagina die de details rendert
-    let artItem = document.createElement('li');
-    // console.log(`overview`,item)
-    //  let output = 
-    //  '<figure><img src="' + item.img + '" alt="image of arts"><figcaption>' + item.title + '</figcaption></figure>';
-    let output = `
-     <a href="#detail/${item.artid}">
-      <figure>
-        <img src="${item.img}" alt="image of arts"><figcaption>${item.title}</figcaption>
-      </figure>
-     </a>
-     `
-    artItem.innerHTML = output;
-    document.getElementById('art-collection').appendChild(artItem);
-  })
-}
 
-/* add details */
-export const setDetails = (data) => {
-  console.log(`een hoopje data`)
-  // console.log(data)
-  //Kijk als main container een kind heeft, zoja verwijder deze (loading state verwijderen)
-  const mainContainer = document.querySelector('main')
-  while (mainContainer.firstChild) {
-    mainContainer.removeChild(mainContainer.firstChild)
-  }
-
-  // template literal `` || variabele binnen een template literal ${}
-  const detailsArt = `
-  <section id="detailsOfArt">
-    <h2>${data.artObject.longTitle}</h2>
-    <img src="${data.artObject.webImage.url}" alt="foto">
-    <p>${data.artObject.description}</p>
-    <p>materiaal: ${data.artObject.materials}</p> 
-    <a id="bnt" href="#overview">Terug</a>
-  </section>
-  `
-  // a link web -> rijksmuseumlink
-  // voor de data elementen die je op je detailpagina wilt zien moet je naar het object artObject kijken en de keys daaruit pakken
-
-  mainContainer.insertAdjacentHTML('beforeend', detailsArt)
-  // return true
-}

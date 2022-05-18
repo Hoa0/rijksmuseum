@@ -1,6 +1,5 @@
-import {router} from "./modules/router.js";
+import router from '../script/modules/router.js';
+import {searchItem}from '../script/modules/search.js';
 
-(async function compile() {
-    console.log('werk ik?')
-    router()
-})()
+router();
+searchItem();

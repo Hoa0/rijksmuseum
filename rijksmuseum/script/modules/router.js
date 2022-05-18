@@ -1,45 +1,44 @@
-import { getData } from "./data.js";
-import { setArts, setDetails } from "./render.js";
-import { loading, addLoadingElement } from "./state.js";
+import { getData, getObjectFromData } from '../modules/data.js'
+import { render } from '../modules/render.js'
 
-const display = document.getElementById("art-collection");
+const baseURL = "https://www.rijksmuseum.nl/api/nl/collection";
+const key = "?key=m37TFPjT&ps=20";
+const endpoint = 'https://www.rijksmuseum.nl/api/nl/collection?key=m37TFPjT';
 
-export function router() {
-  const baseURL = "https://www.rijksmuseum.nl/api/nl/collection";
-  const key = "?key=m37TFPjT&ps=20";
-
+const router = () => { 
   routie({
-    overview: async function () {
-      const getOverview = await getData(`${baseURL}${key}`);
-      console.log("It works well");
-      return setArts(getOverview, display);
-    },
-    "detail/:id": async function (id) {
-      const detailArts = await getData(`${baseURL}/${id}${key}`);
-      console.log(`I am a detail and navigate to ${baseURL}/${id}${key}`);
-      console.log(`dataset`, detailArts);
-      return setDetails(detailArts, display);
-    },
-    "search/:searchItem": async (searchItem) => {
-      const searchData = await getData(`${baseURL}${key}&q=${searchItem}`);
+    "detail/:id": async (id) => {
+      console.log(`detailpage`, id)
+      const detailUrl = `${baseURL}/${id}${key}`;
+      console.log(detailUrl)
+    
+      const data = getObjectFromData(await getData(detailUrl), 'artObject') 
+      render.detail(data, id)
+      return data
 
-      //Controle als het aantal groter is dan 0, zo niet, geen resultaten melding
-      if (searchData.count > 0) {
-        console.log(`found ${searchData.count} results \n`, searchData)
-        return setArts(searchData)
-      } else {
-        console.log(`found no results`)
-        addLoadingElement(document.querySelector('main'), 'noResult')
+    },
+    "search/:query?": async (query) => {
+     
+      const searchData = getObjectFromData(await getData(`${baseURL}${key}&q=${query}`), 'artObjects')
+      console.log(searchData)
+      console.log(`searching for`, query)
+      render.search(query, searchData)
 
-      }
     },
-    "": async function () {
-      const getOverview = await getData(`${baseURL}${key}`);
-      console.log("wildcard", getOverview);
-      return setArts(getOverview, display);
-    },
-  });
+    // "overview": async () => {
+    //   console.log(`overview`)
+    //   const data = getObjectFromData(await getData(endpoint), 'artObjects')
+    //   render.overview(data)
+    // },
+    "": async () => {
+      console.log(`empty route`)
+      const data = getObjectFromData(await getData(endpoint), 'artObjects')
+      render.overview(data)
+    }
+  })
 }
 
-//https://www.rijksmuseum.nl/api/nl/collection/BK-17496?key=m37TFPjT
-//https://www.rijksmuseum.nl/api/nl/collection/${id}?key=m37TFPjT
+export default rrouter;
+
+
+

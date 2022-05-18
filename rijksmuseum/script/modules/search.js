@@ -1,52 +1,17 @@
-import { getData } from "./data.js";
-
-const textInput = document.querySelector('.textInput-search');
-const buttonSearch = document.querySelector('.btn-search');
-const result = document.querySelector('art-collection');
-const mainContainer = document.querySelector('main')
-
-let artNamesList = [];
-
-function searchFilter() {
-  fetch(getData)
-    .then(response => response.json())
-    .then(data => {
-
-      let artNames = data.map(element => {
-        return {
-          name: data.artObject.longTitle
-        }
-      })
+/**
+ * functie dat zoek naar je zoek input en button daarvan
+ * Aan deze knop voeg ik een event listener toe, wanneer ik op de knop druk doet ie het volgende
+ * Stopt het standaard gedrag, navigeert naar mijn router die zoekt met input waarde van veld
+ * En heeft een addEventListener
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault
+ */
+export function searchItem (){
+    const searchBtn = document.getElementById('btn-search')
+    const input = document.querySelector('#textInput-search')
+    searchBtn.addEventListener('click', (e) => {
+      e.preventDefault()
+      routie(`search/${input.value}`)
+      
     })
-    .catch(
-      (error) => {
-        console.log('no results found')
-
-      }
-    )
 }
 
-textInput.addEventListener("input", (e) => {
-  let value = e.target.value
-
-  // checking if input exists
-  if (value && value.trim().length > 0) {
-    value = value.trim().toLowerCase()
-  }
-})
-
-/* zoek opdrachten weergeven aan de gebruiker */
-const setResults = (data) => {
-  const display = data
-    .map((data) => {
-      `
-             <ul id="art-collection">
-                <li>
-                <h2>${data.artObject.longTitle}</h2>
-                <img src="${data.artObject.webImage.url}" alt="foto">
-                </li>
-            </ul>
-           `
-    })
-  mainContainer.insertAdjacentHTML('beforeend', setResults)
-}

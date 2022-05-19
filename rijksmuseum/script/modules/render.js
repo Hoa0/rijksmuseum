@@ -4,42 +4,48 @@ import { stateManagement } from "../modules/state.js";
  * Het weergeven van data in HTML
  */
 
- const render = {
-    overview(data) {
-      console.log('overview van data', data)
-      if (doesContainerExist('#art-collection')) {
-        clearContainer('#art-collection')
-        return setGallery(data)
-      }
-      return data
-    },
-    detail(data, id) {
-      console.log(`detailpage of ${id}`, data)
-      if (doesContainerExist('#art-collection')) {
-        clearContainer('#art-collection') // inhoud van container wordt verwijderd
-        return createDetailPage(data)
-      }
-      return data
-    },
-    search(query, data) {
-      console.log(`searching ${query}`)
-
-      /**
+const render = {
+  overview(data) {
+    console.log('overview van data', data)
+    if (doesContainerExist('#art-collection')) {
+      clearContainer('#art-collection')
+      return setGallery(data)
+    }
+    return data
+  },
+  detail(data, id) {
+    console.log(`detailpage of ${id}`, data)
+    if (doesContainerExist('#art-collection')) {
+      clearContainer('#art-collection') // inhoud van container wordt verwijderd
+      return createDetailPage(data) //plaats content van details
+    }
+    return data
+  },
+  search(query, data) {
+    /**
        * Kijk als de state zoeken leeg is, nee kijk als container bestaat en vul het in.
        * zoniet, voert statemanagement uit, "geen resultaten"
-       */
-      if(stateManagement.isSearchEmpty(query, data)) {
-        console.log('data is groter dan 1')
-        if(doesContainerExist('#art-collection')) {
-          clearContainer('#art-collection') 
-          return setGallery(data)
-        } else {
-        console.log('Data heeft geen resultaten')
-        }
+     */
+    if (stateManagement.isSearchEmpty(query, data)) {
+      console.log(`searching ${query}`)
+
+      console.log('data is empty')
+      clearContainer('#art-collection') //Haal art-collection leeg
+      stateManagement.isSearchEmpty(query, data) //Omdat het zoeken leeg is gehaald moet de melding terug geplaatst worden. nog een keer oproepen
+    } else {
+      //Er zij resultaten op de zoekopdracht
+      console.log(`searching ${query}`)
+
+      if (doesContainerExist('#art-collection')) {
+        //bestaat de container? voer dan het volgende uit
+        console.log('container exists')
+        clearContainer('#art-collection') //maak container leeg voor nieuwe content
+        return setGallery(data) //plaats nieuwe content
       }
-      return data
     }
+    return data
   }
+}
   
   /**
    * @description bekijk als de container (#art-collection) bestaat, en geef een boolean terug

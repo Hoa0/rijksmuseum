@@ -31,6 +31,27 @@ The assignment for WAFS, is to create a client side Single Web App for art lover
 
 <img src="https://github.com/Hoa0/rijksmuseum/blob/main/docs/img/wafs-activityDiagram.png" width="1000">
 
+## Features
+
+- View art collection from Rijksmuseum
+- View art details
+- Search art items
+
+## Checklist
+
+- [x] Show art collection
+- [x] Show art details
+- [x] Search art
+- [x] add routie
+- [ ] Detail responsive
+- [ ] Wiki process
+
+### Wishlist
+
+- [ ] Show alphabetical by name art
+- [ ] Add favorite
+- [ ] suggestions Arts
+
 ## Installation
 
 Clone this project
@@ -39,7 +60,9 @@ Clone this project
 git clone https://github.com/Hoa0/rijksmuseum.githttps://github.com/Hoa0/rijksmuseum.git
 ```
 
-Open project with vcode live server
+Start project with VSCode [live server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
+
+Navigate to 'rijksmuseum' folder
 
 ## License
 

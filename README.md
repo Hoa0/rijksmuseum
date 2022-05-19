@@ -29,7 +29,7 @@ The assignment for WAFS, is to create a client side Single Web App for art lover
 
 ## Activity Diagram
 
-<img src="https://github.com/Hoa0/rijksmuseum/blob/main/docs/img/wafs-activityDiagram.png" width="800">
+<img src="https://github.com/Hoa0/rijksmuseum/blob/main/docs/img/wafs-activityDiagram.png" width="1000">
 
 ## Installation
 

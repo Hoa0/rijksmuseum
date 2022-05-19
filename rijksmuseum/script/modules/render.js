@@ -15,7 +15,7 @@ import { stateManagement } from "../modules/state.js";
     },
     detail(data, id) {
       console.log(`detailpage of ${id}`, data)
-      if (doesContainerExist('#art-collec tion')) {
+      if (doesContainerExist('#art-collection')) {
         clearContainer('#art-collection') // inhoud van container wordt verwijderd
         return createDetailPage(data)
       }

@@ -1,5 +1,9 @@
 import { stateManagement } from "../modules/state.js";
 
+/**
+ * Het weergeven van data in HTML
+ */
+
  const render = {
     overview(data) {
       console.log('overview van data', data)
@@ -20,6 +24,10 @@ import { stateManagement } from "../modules/state.js";
     search(query, data) {
       console.log(`searching ${query}`)
 
+      /**
+       * Kijk als de state zoeken leeg is, nee kijk als container bestaat en vul het in.
+       * zoniet, voert statemanagement uit, "geen resultaten"
+       */
       if(stateManagement.isSearchEmpty(query, data)) {
         console.log('data is groter dan 1')
         if(doesContainerExist('#art-collection')) {

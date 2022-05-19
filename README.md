@@ -16,6 +16,8 @@
 
 The assignment for WAFS, is to create a client side Single Web App for art lovers. With this app it's possible for users to search through the Rijksmuseum art collections and view details of art. The retrieved art collections are from the rijksmuseum API.
 
+[Wiki proces WAFS](https://github.com/Hoa0/rijksmuseum/wiki/Process-WAFS)
+
 ### User story
 
 > As an art lover, I want to be able to search and view art from the Rijksmuseum at home, so that I can still enjoy art during a lockdown Rijksmuseum - RijksData API

@@ -59,7 +59,7 @@ import { stateManagement } from "../modules/state.js";
    * @see https://www.geeksforgeeks.org/remove-all-the-child-elements-of-a-dom-node-in-javascript/#:~:text=Child%20nodes%20can%20be%20removed,which%20produces%20the%20same%20output.
    */
   const clearContainer = (string) => {
-    const container = document.querySelector(string) 
+    const container = document.querySelector('ul') 
   
     let target = container.firstElementChild 
     while (container.childElementCount > 0) { 

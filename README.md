@@ -73,3 +73,9 @@ Navigate to 'rijksmuseum' folder
 ## License
 
 MIT
+
+## Sources
+
+- [credits-to-CMD](https://github.com/cmda-minor-web/web-app-from-scratch-2122)
+- [routie](http://projects.jga.me/routie/)
+- [Rijksmuseum-API](https://data.rijksmuseum.nl/object-metadata/api/)

@@ -97,7 +97,7 @@ const render = {
    * @param {Array} data is een array van collection (setGallery) die dus ieder key value pair in een HTMLElement plaatst
    */
   const createGalleryView = (data) => {
-    data.forEach(item => {
+    data.map(item => {
       const element = document.createElement('li')
       const content = `
         <a href="#detail/${item.artid}">
@@ -119,7 +119,7 @@ const render = {
    */
   const setGallery = (response) => {
     const collection = [];
-    response.forEach(item => {
+    response.map(item => {
       collection.push({
         title: item?.longTitle,
         img: item?.hasImage ? item?.webImage.url : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg',

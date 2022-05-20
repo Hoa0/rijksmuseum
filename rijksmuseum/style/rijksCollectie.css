@@ -89,8 +89,8 @@ header > form > button {
 }
 
 header > form > button:hover {
-     background-color: #363219;
-     color: #ffffff;
+  background-color: #363219;
+  color: #ffffff;
 }
 
 header h1 {
@@ -122,6 +122,11 @@ img {
   max-width: 100%;
 }
 
+section#detailsOfArt {
+  max-width: 70vw;
+  text-align: start;
+}
+
 /* details page styling */
 section#detailsOfArt > h2 {
   font-size: 1em;
@@ -132,7 +137,7 @@ section#detailsOfArt > h2 {
 }
 
 section#detailsOfArt > p {
-  margin: 1.5em;
+  margin: 1.5em 0;
 }
 
 section#detailsOfArt > p:nth-of-type(2) {
@@ -142,7 +147,6 @@ section#detailsOfArt > p:nth-of-type(2) {
 
 /*button terug naar overview*/
 section > a#bnt {
-  margin: 1.5em;
   padding: 0.5em;
   border: 1px solid black;
   border-radius: 0.5em;
